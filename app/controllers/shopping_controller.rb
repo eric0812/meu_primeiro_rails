@@ -8,17 +8,38 @@ class ShoppingController < ApplicationController
     if shop.save
       @msg = 'salvo com sucesso'
     else
-      @msg = shop.errors.messages
+      @msg = shop.errors.messages 
     end
   end
 
   def edit
+    @shop = Shop.find_by(id: params['id'])
   end
 
   def update
+    shop = Shop.find_by(id: params['id'])
+    if shop.update_attributes(permit)
+      @msg = 'salvo com sucesso'
+    else
+      @msg = shop.errors.messages
+    end 
   end
 
   def destroy
+    @shop = Shop.find_by(id: params['id']) 
+    if shop.destroy
+      @msg = 'excluido com sucesso'
+    else
+      @msg = shop.errors.messages
+    end 
+  end
+
+  def index
+    @shops = Shop.all
+  end
+
+  def show
+    @shop = Shop.find_by(id: params['id'])    
   end
 
 private
